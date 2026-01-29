@@ -2,15 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+        stage('Clone Repo') {
             steps {
-                bat 'docker build -t python-microproject .'
+                git branch: 'main',
+                    url: 'https://github.com/KevalFuriya/microproject.git'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Build Docker Image') {
             steps {
-                bat 'docker run --rm python-microproject'
+                sh 'docker build -t python-microproject .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh 'docker run --rm python-microproject'
             }
         }
     }
