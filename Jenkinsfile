@@ -12,7 +12,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'pytest'
+                bat 'pytest --junitxml=test-results.xml'
             }
         }
 
@@ -27,5 +27,12 @@ pipeline {
                 bat 'docker run --rm python-microproject'
             }
         }
+
+        stage('Publish Test Results') {
+            steps {
+                junit 'test-results.xml'
+            }
+        }
+
     }
 }
