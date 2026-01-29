@@ -32,6 +32,11 @@ pipeline {
             steps {
                 junit 'test-results.xml'
             }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'app.log'
+                    }
+                }
         }
 
     }
