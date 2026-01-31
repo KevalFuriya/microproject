@@ -24,20 +24,26 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                bat 'docker run --rm python-microproject'
+                bat '''
+                    docker run --rm ^
+                    -v "%CD%:/app" ^
+                    python-microproject
+                    '''
             }
         }
+
 
         stage('Publish Test Results') {
             steps {
                 junit 'test-results.xml'
             }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'app.log'
-                    }
-                }
-        }
+           post {
+    always {
+        archiveArtifacts artifacts: 'app.log'
+        junit 'test-results.xml'
+    }
+}
+
 
     }
 }
