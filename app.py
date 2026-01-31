@@ -1,5 +1,6 @@
 import logging
-from datetime import datetime
+import time
+import random
 
 logging.basicConfig(
     filename="app.log",
@@ -7,12 +8,14 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s"
 )
 
-logging.info("Python app started")
+logging.info("Application started")
 
-def main():
-    logging.info("Running main logic")
-    print("Hello from Python microproject")
+for i in range(5):
+    num = random.randint(1, 100)
+    if num % 2 == 0:
+        logging.info(f"{num} is even")
+    else:
+        logging.error(f"{num} is odd")
+    time.sleep(2)
 
-if __name__ == "__main__":
-    main()
-    logging.info("Python app finished")
+logging.info("Application finished")
